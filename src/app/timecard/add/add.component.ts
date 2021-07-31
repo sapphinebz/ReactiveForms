@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Calendar } from 'primeng/calendar';
 import { animationFrameScheduler } from 'rxjs';
+import { DayTimecard } from 'src/app/shared/calendar/calendar';
 import { Timecard } from 'src/app/shared/interfaces/timecard';
 
 @Component({
@@ -18,6 +19,12 @@ export class AddComponent implements OnInit {
     startForm: this.startForm,
     endForm: this.endForm,
   });
+
+  dayTimeCard = new DayTimecard(
+    (date) => `${date.getDate()}/${date.getMonth()}`
+  );
+  chipForm = new FormControl(this.dayTimeCard.toDayLabel(new Date()));
+  week: any[] = Array.from(this.dayTimeCard.iterators());
 
   constructor() {}
 
@@ -45,6 +52,10 @@ export class AddComponent implements OnInit {
     date.setHours(Number(hour));
     date.setMinutes(Number(minute));
     return date;
+  }
+
+  hello() {
+    console.log('hello');
   }
 
   extractTime(timeText: string) {

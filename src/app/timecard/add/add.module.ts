@@ -6,7 +6,7 @@ import { AddComponent } from './add.component';
 import { InputTextModule } from 'primeng/inputtext';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CalendarModule } from 'src/app/shared/calendar/calendar.module';
-
+import { ChipModule } from 'src/app/shared/chip/chip.module';
 @NgModule({
   declarations: [AddComponent],
   imports: [
@@ -15,6 +15,7 @@ import { CalendarModule } from 'src/app/shared/calendar/calendar.module';
     ReactiveFormsModule,
     AddRoutingModule,
     CalendarModule,
+    ChipModule,
   ],
 })
 export class AddModule {}

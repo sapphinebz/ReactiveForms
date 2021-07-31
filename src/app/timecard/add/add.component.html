@@ -1,8 +1,20 @@
 <div class="grid justify-content-center">
-  <div class="col-12 md:col-offset-3 md:col-3 lg:col-offset-3 lg:col-3">
+  <div class="col-12 md:col-6 lg:col-offset-2 lg:col-4">
     <div class="grid">
       <div class="col-12">
-        <p-calendar
+        <div class="flex justify-content-around" appModelChipGroup>
+          <div class="flex-initial" *ngFor="let day of week">
+            <p-chip
+              appModelChip
+              [appModelChipValue]="day.label"
+              [formControl]="chipForm"
+              label="{{ day.day | dayLabel }} {{ day.label }}"
+              styleClass="p-mr-2 w-min"
+            ></p-chip>
+          </div>
+        </div>
+        {{ chipForm.value }}
+        <!-- <p-calendar
           placeholder="timecard start 07/05/2021 22:59"
           styleClass="w-full"
           [formControl]="startForm"
@@ -10,17 +22,17 @@
           #appOnModel="appOnModelChange"
           (appOnModelChange)="selectStartTimecard(appOnModel.calendar)"
           inputId="time"
-        ></p-calendar>
+        ></p-calendar> -->
       </div>
       <div class="col-12">
-        <input
+        <!-- <input
           type="text"
           [formControl]="endForm"
           (keyup.enter)="submit()"
           pInputText
           class="w-full"
           placeholder="timecard end 07/05/2021 22:59"
-        />
+        /> -->
       </div>
     </div>
   </div>

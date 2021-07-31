@@ -1,18 +1,36 @@
-<router-outlet></router-outlet>
-<!-- <div class="grid">
+<div class="grid">
   <div class="col-12 md:col-6 lg:col-3">
-    <input type="text" pInputText class="w-full" />
+    <input
+      type="text"
+      [formControl]="weightForm"
+      pInputText
+      class="w-full"
+      placeholder="weight kg"
+    />
   </div>
   <div class="col-12 md:col-6 lg:col-3">
-    <input class="w-full" type="text" pInputText />
+    <input
+      type="text"
+      [formControl]="heightForm"
+      pInputText
+      class="w-full"
+      placeholder="height m"
+    />
   </div>
-  <div class="col-12 md:col-6 lg:col-3">
-    <input class="w-full" type="text" pInputText />
+
+  <div class="col-12 md:col-6 lg:col-6">
+    <p-button label="Calculate BMI" (onClick)="calculate()"></p-button>
+    <span *ngIf="weightForm.invalid && weightForm.touched"
+      >กรุณากรอกน้ำหนัก</span
+    >
+    <span *ngIf="heightForm.invalid && heightForm.touched"
+      >กรุณากรอกส่วนสูง</span
+    >
   </div>
-  <div class="col-12 md:col-6 lg:col-3">
-    <input class="w-full" type="text" pInputText />
-  </div>
-  <div class="col-12 md:col-6 lg:col-3">
-    {{ hero$ | async | json }}
-  </div>
-</div> -->
+</div>
+<div class="grid">
+  <div class="col-12">BMI: {{ bmi }}</div>
+</div>
+<div class="grid">
+  <div class="col-12">INFO: {{ info }}</div>
+</div>

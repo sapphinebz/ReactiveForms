@@ -26,8 +26,9 @@ export class AppComponent {
     }
     const weight = this.weightForm.value;
     const height = this.heightForm.value;
-    this.bmi = weight / height ** 2;
     console.log('weight', weight);
     console.log('height', height);
+
+    this.bmi = weight / height ** 2;
   }
 }

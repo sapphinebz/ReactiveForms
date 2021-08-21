@@ -1,36 +1,36 @@
 <div class="grid">
   <div class="col-12 md:col-6 lg:col-3">
-    <input
-      type="text"
-      [formControl]="weightForm"
-      pInputText
-      class="w-full"
-      placeholder="weight kg"
-    />
+    <div class="p-field p-fluid">
+      <label for="email">Email</label>
+      <input
+        type="text"
+        [formControl]="emailForm"
+        pInputText
+        class="w-full"
+        placeholder="email@org.xx"
+      />
+      <small
+        id="email-help"
+        class="p-error"
+        *ngIf="
+          emailForm.hasError('required') &&
+          emailForm.invalid &&
+          emailForm.touched
+        "
+        >Email is not available.</small
+      >
+      <small
+        id="email-help"
+        class="p-error"
+        *ngIf="
+          emailForm.hasError('email') && emailForm.invalid && emailForm.touched
+        "
+        >WTF email syntax</small
+      >
+    </div>
   </div>
-  <div class="col-12 md:col-6 lg:col-3">
-    <input
-      type="text"
-      [formControl]="heightForm"
-      pInputText
-      class="w-full"
-      placeholder="height m"
-    />
-  </div>
-
-  <div class="col-12 md:col-6 lg:col-6">
-    <p-button label="Calculate BMI" (onClick)="calculate()"></p-button>
-    <span *ngIf="weightForm.invalid && weightForm.touched"
-      >กรุณากรอกน้ำหนัก</span
-    >
-    <span *ngIf="heightForm.invalid && heightForm.touched"
-      >กรุณากรอกส่วนสูง</span
-    >
+  <div class="col-12">
+    <p-button [disabled]="emailForm.invalid" label="submit"></p-button>
   </div>
 </div>
-<div class="grid">
-  <div class="col-12">BMI: {{ bmi }}</div>
-</div>
-<div class="grid">
-  <div class="col-12">INFO: {{ info }}</div>
-</div>
+{{ emailForm.errors | json }}

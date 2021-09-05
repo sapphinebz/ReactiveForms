@@ -10,4 +10,22 @@
     // color: white;
     background-color: aliceblue;
   }
+
+  .input-search {
+    position: relative;
+    > input {
+      appearance: none;
+      padding: 4px 4px 4px 29px;
+
+      -webkit-appearance: none;
+      -moz-appearance: none;
+    }
+  }
+
+  .pi-search:before {
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    color: darkgray;
+  }
 }

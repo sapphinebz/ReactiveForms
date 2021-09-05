@@ -11,19 +11,36 @@
         product-header
       "
     >
-      <p-button
-        label="Add Product"
-        styleClass="p-button-success p-ripple "
-        icon="pi pi-plus"
-        (onClick)="addProduct()"
-        iconPos="right"
-      ></p-button>
-      Product List
+      <div>
+        <p-button
+          class="mr-3"
+          label="Add Product"
+          styleClass="p-button-success p-ripple "
+          icon="pi pi-plus"
+          (onClick)="addProduct()"
+          iconPos="right"
+        ></p-button>
+        <span class="input-search pi pi-search">
+          <input
+            type="text"
+            [(ngModel)]="filterProductName"
+            pInputText
+            placeholder="filter Product"
+          />
+        </span>
+      </div>
+      <span> Product List </span>
       <div></div>
     </div>
     <div
       class="col-12"
-      *ngFor="let productGroup of productFormArray.controls; let i = index"
+      *ngFor="
+        let productGroup of productFormArray.controls
+          | filterByProductName
+            : filterProductName
+            : productFormArray.controls.length;
+        let i = index
+      "
     >
       <app-product
         [useFormGroup]="$any(productGroup)"

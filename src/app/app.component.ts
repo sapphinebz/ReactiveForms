@@ -17,7 +17,7 @@ import { createProductFormGroup, Product } from './shared/product/product';
 })
 export class AppComponent implements OnInit {
   productFormArray = new FormArray([]);
-
+  filterProductName = '';
   total: number = 0;
   totalDiscount: number = 0;
   finalTotal: number = 0;

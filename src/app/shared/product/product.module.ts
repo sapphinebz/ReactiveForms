@@ -8,8 +8,9 @@ import { MoreDetailModule } from '../more-detail/more-detail.module';
 import { ProductComponent } from './components/product/product.component';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { HttpProductsAutoCompleteDirective } from './directives/http-products-auto-complete.directive';
+import { FilterByProductNamePipe } from './pipes/filter-by-product-name.pipe';
 @NgModule({
-  declarations: [ProductComponent, HttpProductsAutoCompleteDirective],
+  declarations: [ProductComponent, HttpProductsAutoCompleteDirective, FilterByProductNamePipe],
   imports: [
     CommonModule,
     ButtonModule,
@@ -23,6 +24,7 @@ import { HttpProductsAutoCompleteDirective } from './directives/http-products-au
     ProductComponent,
     HttpProductsAutoCompleteDirective,
     AutoCompleteModule,
+    FilterByProductNamePipe,
   ],
 })
 export class ProductModule {}

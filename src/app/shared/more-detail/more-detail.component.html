@@ -1,0 +1,31 @@
+<p-button
+  icon="pi pi-ellipsis-h"
+  (onClick)="displayDialog = true; onModelTouched()"
+  styleClass="p-button-raised p-button-secondary"
+></p-button>
+
+<p-dialog
+  [header]="header"
+  [(visible)]="displayDialog"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <p class="p-m-0">
+    <textarea
+      pInputTextarea
+      class="w-full"
+      [ngModel]="detail"
+      (ngModelChange)="updateDetail($event)"
+    ></textarea>
+  </p>
+  <ng-template pTemplate="footer">
+    <p-button
+      icon="pi pi-check"
+      (onClick)="displayDialog = false"
+      label="Ok"
+      styleClass="p-button-text"
+    ></p-button>
+  </ng-template>
+</p-dialog>

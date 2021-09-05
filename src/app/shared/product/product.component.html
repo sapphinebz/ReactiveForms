@@ -1,0 +1,59 @@
+<div class="grid" [formGroup]="useFormGroup">
+  <div class="col-12 md:col-12 lg:col-12 xl:col-5 flex">
+    <input
+      type="text"
+      formControlName="name"
+      class="w-full mr-3"
+      pInputText
+      placeholder="name"
+    />
+    <app-more-detail
+      header="Product Detail"
+      formControlName="detail"
+    ></app-more-detail>
+  </div>
+  <div class="col-12 md:col-12 lg:col-12 xl:col-1">
+    <input
+      type="number"
+      formControlName="quality"
+      class="w-full"
+      pInputText
+      placeholder="quality"
+    />
+  </div>
+  <div class="col-12 md:col-12 lg:col-12 xl:col-1">
+    <p-dropdown
+      styleClass="w-full"
+      [options]="unitOption"
+      formControlName="unit"
+    ></p-dropdown>
+  </div>
+  <div class="col-12 md:col-12 lg:col-12 xl:col-2">
+    <input
+      type="number"
+      formControlName="price"
+      class="w-full"
+      pInputText
+      placeholder="price"
+    />
+  </div>
+  <div class="col-12 md:col-12 lg:col-12 xl:col-2">
+    <p-dropdown
+      placeholder="discount"
+      styleClass="w-full"
+      formControlName="discount"
+      [options]="discountOption"
+    ></p-dropdown>
+  </div>
+  <div class="col-12 md:col-12 lg:col-1">
+    <p-button
+      type="button"
+      [disabled]="disableRemove"
+      icon="pi pi-trash"
+      (onClick)="remove($event)"
+      iconPos="right"
+      label="remove"
+      styleClass="p-button-danger w-full"
+    ></p-button>
+  </div>
+</div>

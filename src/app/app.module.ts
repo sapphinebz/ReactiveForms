@@ -6,7 +6,9 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ProductModule } from './shared/product/product.module';
+import { RadioButtonModule } from 'primeng/radiobutton';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -14,8 +16,11 @@ import { ReactiveFormsModule } from '@angular/forms';
     AppRoutingModule,
     BrowserAnimationsModule,
     InputTextModule,
+    ProductModule,
     ButtonModule,
     ReactiveFormsModule,
+    RadioButtonModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

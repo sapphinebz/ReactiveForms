@@ -1,34 +1,71 @@
-import { Component } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import {
+  AbstractControl,
+  FormArray,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { defer, of } from 'rxjs';
 import { BrowserStorageService } from './browser-storage.service';
+import { createProductFormGroup, Product } from './shared/product/product';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
-  title = 'ReactiveForms';
-  bmi = 0;
-  info = '';
+export class AppComponent implements OnInit {
+  productFormArray = new FormArray([]);
 
-  weightForm = new FormControl(30, Validators.required);
-  heightForm = new FormControl(1.4, Validators.required);
+  total: number = 0;
+  totalDiscount: number = 0;
+  finalTotal: number = 0;
+  pay: number = 0;
+  tax = 0;
 
-  constructor() {}
+  ngOnInit() {
+    this.addProduct();
+  }
 
-  // A BMI of 25.0 or more is overweight, while the healthy range is 18.5 to 24.9. BMI applies to most adults 18-65 years.
+  addProduct() {
+    const productFormGroup = createProductFormGroup();
+    this.productFormArray.push(productFormGroup);
+  }
 
-  calculate() {
-    if (this.weightForm.invalid || this.heightForm.invalid) {
-      return;
-    }
-    const weight = this.weightForm.value;
-    const height = this.heightForm.value;
-    console.log('weight', weight);
-    console.log('height', height);
+  remove(form: AbstractControl) {
+    const index = this.productFormArray.controls.findIndex(
+      (group) => group === form
+    );
+    this.productFormArray.removeAt(index);
+  }
 
-    this.bmi = weight / height ** 2;
+  recalculateSummary() {
+    const products = this.getAllProduct();
+    let total = 0;
+    let totalDiscount = 0;
+    products.forEach((product) => {
+      const price = product.price || 0;
+      const quality = product.quality || 0;
+      const discount = product.discount || 0;
+      if (discount > 0) {
+        totalDiscount += (quality * price * discount) / 100;
+      }
+      total += price * quality;
+    });
+
+    this.total = total;
+    this.totalDiscount = totalDiscount;
+    this.pay = this.total - this.totalDiscount;
+    this.calculateTax();
+  }
+
+  calculateTax() {
+    this.finalTotal = this.pay * (this.tax + 1);
+  }
+
+  getAllProduct() {
+    const products: Product[] = this.productFormArray.getRawValue();
+    return products;
   }
 }

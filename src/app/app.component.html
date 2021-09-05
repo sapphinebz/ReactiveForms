@@ -1,36 +1,96 @@
 <div class="grid">
-  <div class="col-12 md:col-6 lg:col-3">
-    <input
-      type="text"
-      [formControl]="weightForm"
-      pInputText
-      class="w-full"
-      placeholder="weight kg"
-    />
-  </div>
-  <div class="col-12 md:col-6 lg:col-3">
-    <input
-      type="text"
-      [formControl]="heightForm"
-      pInputText
-      class="w-full"
-      placeholder="height m"
-    />
-  </div>
+  <div class="col-12">
+    <div
+      class="
+        align-items-center
+        col-12
+        flex
+        justify-content-between
+        lg:col-12
+        md:col-12
+        product-header
+      "
+    >
+      <div></div>
+      Product
 
-  <div class="col-12 md:col-6 lg:col-6">
-    <p-button label="Calculate BMI" (onClick)="calculate()"></p-button>
-    <span *ngIf="weightForm.invalid && weightForm.touched"
-      >กรุณากรอกน้ำหนัก</span
+      <p-button
+        label="Add"
+        styleClass="p-button-success p-ripple "
+        icon="pi pi-plus"
+        (onClick)="addProduct()"
+        iconPos="right"
+      ></p-button>
+    </div>
+    <div
+      class="col-12"
+      *ngFor="let productGroup of productFormArray.controls; let i = index"
     >
-    <span *ngIf="heightForm.invalid && heightForm.touched"
-      >กรุณากรอกส่วนสูง</span
-    >
+      <app-product
+        [useFormGroup]="$any(productGroup)"
+        (onPriceChange)="recalculateSummary()"
+        (onQualityChange)="recalculateSummary()"
+        (onDiscountChange)="recalculateSummary()"
+        (onRemove)="remove(productGroup); recalculateSummary()"
+        [disableRemove]="productFormArray.controls.length === 1"
+      ></app-product>
+    </div>
+    <div class="col-12">
+      <div class="col-12 lg:col-12 md:col-12 product-header">Summary</div>
+      <div class="col-12">
+        <label>
+          total
+          <input
+            readonly
+            type="text"
+            pInputText
+            placeholder="total"
+            [(ngModel)]="total"
+          />
+        </label>
+      </div>
+      <div class="col-12">
+        <label>
+          discount
+          <input
+            readonly
+            type="text"
+            pInputText
+            placeholder="discount"
+            [(ngModel)]="totalDiscount"
+          />
+        </label>
+      </div>
+      <div class="col-12">
+        <label>
+          total pay
+          <input
+            readonly
+            type="text"
+            pInputText
+            placeholder="pay"
+            [(ngModel)]="pay"
+          />
+        </label>
+      </div>
+      <div class="col-12">
+        Tax Addition 7%
+        <p-radioButton
+          [(ngModel)]="tax"
+          (ngModelChange)="calculateTax()"
+          name="tax_group"
+          [value]="0"
+          label="No"
+        ></p-radioButton>
+        <p-radioButton
+          [(ngModel)]="tax"
+          (ngModelChange)="calculateTax()"
+          name="tax_group"
+          [value]="0.07"
+          label="Yes"
+        ></p-radioButton>
+      </div>
+      <div class="col-12">final total: {{ finalTotal }}</div>
+    </div>
   </div>
-</div>
-<div class="grid">
-  <div class="col-12">BMI: {{ bmi }}</div>
-</div>
-<div class="grid">
-  <div class="col-12">INFO: {{ info }}</div>
 </div>

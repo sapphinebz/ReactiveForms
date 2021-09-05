@@ -9,6 +9,7 @@ import { ButtonModule } from 'primeng/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProductModule } from './shared/product/product.module';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -21,6 +22,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     ReactiveFormsModule,
     RadioButtonModule,
     FormsModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

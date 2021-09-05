@@ -2,23 +2,15 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
-  Host,
   Input,
   OnInit,
-  Optional,
   Output,
-  Self,
 } from '@angular/core';
-import {
-  ControlContainer,
-  FormArray,
-  FormControl,
-  FormGroup,
-} from '@angular/forms';
-import { Subject, Subscription } from 'rxjs';
-import { Product, ProductPrototype } from './product';
-import { debounceTime, takeUntil } from 'rxjs/operators';
+import { FormGroup } from '@angular/forms';
 import { SelectItem } from 'primeng/api';
+import { Subject } from 'rxjs';
+import { debounceTime, takeUntil } from 'rxjs/operators';
+import * as Product from '../../product';
 
 @Component({
   selector: 'app-product',
@@ -28,11 +20,11 @@ import { SelectItem } from 'primeng/api';
 })
 export class ProductComponent implements OnInit {
   @Input() useFormGroup!: FormGroup;
-  @Input() disableRemove = false;
-  @Output() onRemove = new EventEmitter<Event>();
   @Output() onPriceChange = new EventEmitter<any>();
   @Output() onQualityChange = new EventEmitter<any>();
   @Output() onDiscountChange = new EventEmitter<any>();
+
+  Product = Product;
 
   discountOption: SelectItem[] = [
     { label: 'no define', value: 0 },
@@ -43,33 +35,27 @@ export class ProductComponent implements OnInit {
   unitOption: SelectItem[] = [
     { label: 'no define', value: null },
     { label: 'ea', value: 'ea' },
+    { label: 'bottles', value: 'bottles' },
   ];
   private destroy$ = new Subject<void>();
 
   constructor() {}
 
   ngOnInit(): void {
-    const priceKeyName: keyof Product = 'price';
-    const qualityKeyName: keyof Product = 'quality';
-    const discountKeyName: keyof Product = 'discount';
-    const priceControl = this.useFormGroup.get(priceKeyName);
+    const priceControl = this.useFormGroup.get(Product.priceKeyName);
     priceControl!.valueChanges
       .pipe(debounceTime(400), takeUntil(this.destroy$))
       .subscribe(this.onPriceChange);
 
-    const qualityControl = this.useFormGroup.get(qualityKeyName);
+    const qualityControl = this.useFormGroup.get(Product.qualityKeyName);
     qualityControl!.valueChanges
       .pipe(debounceTime(400), takeUntil(this.destroy$))
       .subscribe(this.onQualityChange);
 
-    const discountControl = this.useFormGroup.get(discountKeyName);
+    const discountControl = this.useFormGroup.get(Product.discountKeyName);
     discountControl!.valueChanges
       .pipe(debounceTime(400), takeUntil(this.destroy$))
       .subscribe(this.onDiscountChange);
-  }
-
-  remove(event: any) {
-    this.onRemove.emit(event);
   }
 
   ngOnDestroy(): void {

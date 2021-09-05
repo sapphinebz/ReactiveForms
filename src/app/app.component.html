@@ -11,16 +11,15 @@
         product-header
       "
     >
-      <div></div>
-      Product
-
       <p-button
-        label="Add"
+        label="Add Product"
         styleClass="p-button-success p-ripple "
         icon="pi pi-plus"
         (onClick)="addProduct()"
         iconPos="right"
       ></p-button>
+      Product List
+      <div></div>
     </div>
     <div
       class="col-12"
@@ -31,9 +30,18 @@
         (onPriceChange)="recalculateSummary()"
         (onQualityChange)="recalculateSummary()"
         (onDiscountChange)="recalculateSummary()"
-        (onRemove)="remove(productGroup); recalculateSummary()"
-        [disableRemove]="productFormArray.controls.length === 1"
-      ></app-product>
+      >
+        <p-button
+          class="product-remove-button"
+          type="button"
+          [disabled]="productFormArray.controls.length === 1"
+          icon="pi pi-trash"
+          (onClick)="remove(productGroup); recalculateSummary()"
+          iconPos="right"
+          label="Remove"
+          styleClass="p-button-danger w-full"
+        ></p-button>
+      </app-product>
     </div>
     <div class="col-12">
       <div class="col-12 lg:col-12 md:col-12 product-header">Summary</div>
@@ -91,6 +99,9 @@
         ></p-radioButton>
       </div>
       <div class="col-12">final total: {{ finalTotal }}</div>
+      <div class="col-12">
+        <p-button label="Confirm"></p-button>
+      </div>
     </div>
   </div>
 </div>

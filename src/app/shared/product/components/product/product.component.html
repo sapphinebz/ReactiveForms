@@ -1,21 +1,24 @@
 <div class="grid" [formGroup]="useFormGroup">
   <div class="col-12 md:col-12 lg:col-12 xl:col-5 flex">
-    <input
-      type="text"
-      formControlName="name"
+    <p-autoComplete
+      [formControlName]="Product.productKeyName"
       class="w-full mr-3"
-      pInputText
-      placeholder="name"
-    />
+      styleClass="w-full"
+      inputStyleClass="w-full"
+      [dropdown]="true"
+      placeholder="select Product"
+      appHttpProductsAutoComplete
+    ></p-autoComplete>
     <app-more-detail
       header="Product Detail"
-      formControlName="detail"
+      [formControlName]="Product.detailKeyName"
     ></app-more-detail>
   </div>
   <div class="col-12 md:col-12 lg:col-12 xl:col-1">
     <input
       type="number"
-      formControlName="quality"
+      min="0"
+      [formControlName]="Product.qualityKeyName"
       class="w-full"
       pInputText
       placeholder="quality"
@@ -25,13 +28,15 @@
     <p-dropdown
       styleClass="w-full"
       [options]="unitOption"
-      formControlName="unit"
+      [formControlName]="Product.unitKeyName"
     ></p-dropdown>
   </div>
   <div class="col-12 md:col-12 lg:col-12 xl:col-2">
     <input
       type="number"
-      formControlName="price"
+      step="10"
+      min="0"
+      [formControlName]="Product.priceKeyName"
       class="w-full"
       pInputText
       placeholder="price"
@@ -41,19 +46,11 @@
     <p-dropdown
       placeholder="discount"
       styleClass="w-full"
-      formControlName="discount"
+      [formControlName]="Product.discountKeyName"
       [options]="discountOption"
     ></p-dropdown>
   </div>
   <div class="col-12 md:col-12 lg:col-1">
-    <p-button
-      type="button"
-      [disabled]="disableRemove"
-      icon="pi pi-trash"
-      (onClick)="remove($event)"
-      iconPos="right"
-      label="remove"
-      styleClass="p-button-danger w-full"
-    ></p-button>
+    <ng-content select="p-button.product-remove-button"> </ng-content>
   </div>
 </div>

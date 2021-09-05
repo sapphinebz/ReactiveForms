@@ -1,0 +1,30 @@
+[
+  {
+    "product_id": 0,
+    "product_name": "claymore"
+  },
+  {
+    "product_id": 1,
+    "product_name": "fish source"
+  },
+  {
+    "product_id": 2,
+    "product_name": "tomato"
+  },
+  {
+    "product_id": 3,
+    "product_name": "mushroom"
+  },
+  {
+    "product_id": 4,
+    "product_name": "sword"
+  },
+  {
+    "product_id": 5,
+    "product_name": "glasses"
+  },
+  {
+    "product_id": 6,
+    "product_name": "paper page"
+  }
+]

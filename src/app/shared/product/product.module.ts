@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProductComponent } from './product.component';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
 import { MoreDetailModule } from '../more-detail/more-detail.module';
-
+import { ProductComponent } from './components/product/product.component';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { HttpProductsAutoCompleteDirective } from './directives/http-products-auto-complete.directive';
 @NgModule({
-  declarations: [ProductComponent],
+  declarations: [ProductComponent, HttpProductsAutoCompleteDirective],
   imports: [
     CommonModule,
     ButtonModule,
@@ -16,7 +17,12 @@ import { MoreDetailModule } from '../more-detail/more-detail.module';
     ReactiveFormsModule,
     DropdownModule,
     MoreDetailModule,
+    AutoCompleteModule,
   ],
-  exports: [ProductComponent],
+  exports: [
+    ProductComponent,
+    HttpProductsAutoCompleteDirective,
+    AutoCompleteModule,
+  ],
 })
 export class ProductModule {}

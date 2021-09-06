@@ -6,12 +6,12 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
 import { SelectItem } from 'primeng/api';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import * as Product from '../../product';
-
+import { NumberInput } from '@angular/cdk/coercion';
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
@@ -20,11 +20,19 @@ import * as Product from '../../product';
 })
 export class ProductComponent implements OnInit {
   @Input() useFormGroup!: FormGroup;
+  @Input() set disabledRemove(val: boolean) {
+    this.#disabledRemove = `${val}` === 'true' ? true : false;
+  }
+  get disabledRemove(): boolean {
+    return this.#disabledRemove;
+  }
   @Output() onPriceChange = new EventEmitter<any>();
   @Output() onQualityChange = new EventEmitter<any>();
   @Output() onDiscountChange = new EventEmitter<any>();
+  @Output() onClickRemove = new EventEmitter<any>();
 
   Product = Product;
+  #disabledRemove = false;
 
   discountOption: SelectItem[] = [
     { label: 'no define', value: 0 },
@@ -58,8 +66,14 @@ export class ProductComponent implements OnInit {
       .subscribe(this.onDiscountChange);
   }
 
+  remove(event: any) {
+    this.onClickRemove.emit(event);
+  }
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
+  static ngAcceptInputType_useFormGroup: AbstractControl | FormGroup;
+  static ngAcceptInputType_disabledRemove: 'false' | 'true' | false | true;
 }

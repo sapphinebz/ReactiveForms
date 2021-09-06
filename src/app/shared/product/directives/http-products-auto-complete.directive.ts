@@ -1,6 +1,6 @@
 import { Directive, NgZone, OnDestroy } from '@angular/core';
 import { AutoComplete } from 'primeng/autocomplete';
-import { Observable, Subject } from 'rxjs';
+import { MonoTypeOperatorFunction, Observable, Subject } from 'rxjs';
 import { map, shareReplay, switchMap, takeUntil } from 'rxjs/operators';
 import { ProductHttpService } from 'src/app/api/product.http.service';
 import { ProductModel } from 'src/app/models/product';
@@ -39,7 +39,14 @@ export class HttpProductsAutoCompleteDirective implements OnDestroy {
     });
   }
 
-  private filterProduct(query: string) {
+  /**
+   * filter product by query
+   * @param query keyword for filter
+   * @returns Observable<ProductModel[]>
+   */
+  private filterProduct(
+    query: string
+  ): MonoTypeOperatorFunction<ProductModel[]> {
     return (source: Observable<ProductModel[]>) =>
       source.pipe(
         map((products) => {

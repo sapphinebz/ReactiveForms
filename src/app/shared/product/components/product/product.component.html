@@ -51,6 +51,15 @@
     ></p-dropdown>
   </div>
   <div class="col-12 md:col-12 lg:col-1">
-    <ng-content select="p-button.product-remove-button"> </ng-content>
+    <p-button
+      class="product-remove-button"
+      type="button"
+      [disabled]="disabledRemove"
+      icon="pi pi-trash"
+      (onClick)="remove($event)"
+      iconPos="right"
+      label="Remove"
+      styleClass="p-button-danger w-full"
+    ></p-button>
   </div>
 </div>

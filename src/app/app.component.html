@@ -43,21 +43,13 @@
       "
     >
       <app-product
-        [useFormGroup]="$any(productGroup)"
+        [useFormGroup]="productGroup"
         (onPriceChange)="recalculateSummary()"
         (onQualityChange)="recalculateSummary()"
         (onDiscountChange)="recalculateSummary()"
+        (onClickRemove)="remove(productGroup); recalculateSummary()"
+        disabledRemove="true"
       >
-        <p-button
-          class="product-remove-button"
-          type="button"
-          [disabled]="productFormArray.controls.length === 1"
-          icon="pi pi-trash"
-          (onClick)="remove(productGroup); recalculateSummary()"
-          iconPos="right"
-          label="Remove"
-          styleClass="p-button-danger w-full"
-        ></p-button>
       </app-product>
     </div>
     <div class="col-12">

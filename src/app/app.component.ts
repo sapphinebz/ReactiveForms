@@ -1,34 +1,92 @@
-import { Component } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
-import { defer, of } from 'rxjs';
-import { BrowserStorageService } from './browser-storage.service';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { EMPTY, from, Observable, of, Subscription } from 'rxjs';
+import {
+  catchError,
+  mergeAll,
+  shareReplay,
+  switchMap,
+  tap,
+  toArray,
+} from 'rxjs/operators';
+import {
+  Paginator,
+  Pokemon,
+  PokemonUrl,
+  ResponsePokemonByPaginator,
+} from './pokemon';
+import { Rx } from './rx';
+import { ThemeService } from './theme.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  providers: [ThemeService],
 })
-export class AppComponent {
-  title = 'ReactiveForms';
-  bmi = 0;
-  info = '';
+export class AppComponent implements OnInit, OnDestroy {
+  pokemons?: Pokemon[];
+  paginator = { limit: 10, offset: 0 };
 
-  weightForm = new FormControl(30, Validators.required);
-  heightForm = new FormControl(1.4, Validators.required);
+  @Rx.AutoSubscription()
+  subscription!: Subscription;
+  constructor(private http: HttpClient) {}
 
-  constructor() {}
+  @Rx.Cache()
+  private getPokemonByUrl(@Rx.CacheKey() url: string) {
+    return this.http.get<Pokemon>(url);
+  }
 
-  // A BMI of 25.0 or more is overweight, while the healthy range is 18.5 to 24.9. BMI applies to most adults 18-65 years.
+  ngOnInit(): void {
+    this.loadPokemonPaginator();
+  }
 
-  calculate() {
-    if (this.weightForm.invalid || this.heightForm.invalid) {
-      return;
-    }
-    const weight = this.weightForm.value;
-    const height = this.heightForm.value;
-    console.log('weight', weight);
-    console.log('height', height);
+  nextPage() {
+    this.paginator.offset += this.paginator.limit;
+    this.loadPokemonPaginator();
+  }
 
-    this.bmi = weight / height ** 2;
+  prevPage() {
+    this.paginator.offset -= this.paginator.limit;
+    this.loadPokemonPaginator();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  private loadPokemonPaginator() {
+    this.paginatorPokemon(this.paginator.limit, this.paginator.offset);
+  }
+
+  @Rx.Debounce()
+  @Rx.SwitchMap()
+  private paginatorPokemon(limit: number, offset: number) {
+    return this.http
+      .get<ResponsePokemonByPaginator>(
+        `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`
+      )
+      .pipe(
+        this.httpPokemonResultUrl((result) => result.url),
+        tap((pokemons) => (this.pokemons = pokemons))
+      );
+  }
+
+  private httpPokemonResultUrl(project: (data: PokemonUrl) => string) {
+    return (source: Observable<ResponsePokemonByPaginator>) =>
+      source.pipe(
+        switchMap((response) => {
+          return from(
+            response.results.map((result) =>
+              this.getPokemonByUrl(project(result)).pipe(
+                catchError((err) => {
+                  console.error(err);
+                  return EMPTY;
+                })
+              )
+            )
+          ).pipe(mergeAll(), toArray());
+        })
+      );
   }
 }

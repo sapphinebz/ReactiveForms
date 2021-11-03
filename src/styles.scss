@@ -1,1 +1,72 @@
-/* You can add global styles to this file, and also import other style files */
+@import "./assets/theme";
+@import "./assets/skeleton";
+@import "./assets/card";
+
+@function rem($pixels, $context: 16px) {
+  @return #{$pixels/$context}rem;
+}
+
+$font-size-maps: (
+  extra-header: rem(24px),
+  header: rem(20px),
+  normal: rem(20px),
+  small: rem(16px),
+  extra-small: rem(12px),
+  extra-extra-small: rem(4px),
+);
+
+$font-primary-color-maps: (
+  kt-blue: #00a6e6,
+  kt-light-blue: #dff1fc,
+  kt-white: #ffffff,
+  kt-black: #000000,
+  pale-grey: #f9fafb,
+  basic-002: #eaf0f5,
+  basic-003: #bcccd6,
+  basic-004: #8a9fab,
+  basic-005: #5a6e7b,
+  basic-006: #ced4da,
+  kt-lightest-business-grey: #f5f5f5,
+);
+
+$border-radius-maps: (
+  extra-large: rem(24px),
+  large: rem(20px),
+  normal: rem(16px),
+  small: rem(8px),
+  extra-small: rem(4px),
+);
+
+$margin-padding-maps: (
+  large: rem(20px),
+  normal: rem(16px),
+  small: rem(8px),
+  extra-small: rem(4px),
+);
+
+@each $name, $value in $font-size-maps {
+  .text-#{$name} {
+    font-size: $value !important;
+  }
+}
+
+@each $name, $value in $font-primary-color-maps {
+  .text-primary-color-#{$name} {
+    color: $value !important;
+  }
+}
+
+@each $name, $value in $border-radius-maps {
+  .border-radius-#{$name} {
+    border-radius: $value !important;
+  }
+}
+
+@each $name, $value in $margin-padding-maps {
+  .margin-#{$name} {
+    margin: $value !important;
+  }
+  .padding-#{$name} {
+    padding: $value !important;
+  }
+}

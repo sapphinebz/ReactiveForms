@@ -1,0 +1,17 @@
+@mixin light-theme {
+  :host-context([data-theme="light"]) {
+    @content;
+  }
+}
+
+@mixin dark-theme {
+  :host-context([data-theme="dark"]) {
+    @content;
+  }
+}
+
+@mixin pastel-theme {
+  :host-context([data-theme="pastel"]) {
+    @content;
+  }
+}

@@ -1,0 +1,22 @@
+@use 'src/assets/theme.scss' as *;
+
+@include dark-theme {
+  .test-output__background {
+    background-color: black;
+    color: white;
+  }
+}
+
+@include light-theme {
+  .test-output__background {
+    background-color: white;
+    color: black;
+  }
+}
+
+@include pastel-theme {
+  .test-output__background {
+    background-color: pink;
+    color: yellow;
+  }
+}
